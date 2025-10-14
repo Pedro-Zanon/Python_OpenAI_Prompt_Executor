@@ -1,4 +1,4 @@
-# 🤖 OpenAI Prompt Executor - Projeto Python
+🤖 OpenAI Prompt Executor - Projeto Python
 1. 📘 Visão Geral do Projeto
 
 O OpenAI Prompt Executor é um projeto em Python desenvolvido para demonstrar como conectar-se à API da OpenAI, enviar prompts e receber respostas automáticas de modelos de linguagem como o GPT-3.5-Turbo ou GPT-4.
