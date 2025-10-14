@@ -1,103 +1,137 @@
-🤖 OpenAI Prompt Executor - Projeto Python
+# 🤖 OpenAI Prompt Executor - Projeto Python
+1. 📘 Visão Geral do Projeto
 
-Este projeto demonstra como usar a API da OpenAI para executar um prompt e receber uma resposta automática de um modelo de linguagem como o GPT-3.5-Turbo.
+O OpenAI Prompt Executor é um projeto em Python desenvolvido para demonstrar como conectar-se à API da OpenAI, enviar prompts e receber respostas automáticas de modelos de linguagem como o GPT-3.5-Turbo ou GPT-4.
 
-⚙️ Configuração
-1. 📦 Instalar dependências
+O projeto tem como foco fins educacionais, servindo como base para integrar recursos de IA generativa em aplicações Python de forma segura, modular e reutilizável.
 
-Crie um arquivo requirements.txt com o conteúdo:
+2. 🎯 Objetivos do Projeto
+
+O projeto foi desenvolvido com os seguintes objetivos:
+
+Demonstrar a autenticação e uso da API da OpenAI.
+
+Exibir exemplos de requisições seguras usando variáveis de ambiente.
+
+Implementar tratamento de erros para lidar com falhas de rede ou autenticação.
+
+Fornecer um exemplo prático e reutilizável para estudantes e desenvolvedores.
+
+Facilitar a integração de modelos GPT em scripts e aplicações Python.
+
+3. 🧩 Estrutura do Projeto
+
+Abaixo está a estrutura de diretórios e arquivos principais do projeto:
+
+openai-prompt-executor/
+├── executar_prompt.py     # 🧠 Script principal que executa o prompt
+└── requirements.txt       # 📋 Lista de dependências Python
+
+4. ⚙️ Configuração do Ambiente
+4.1 📦 Instalar Dependências
+
+Crie um arquivo chamado requirements.txt com o seguinte conteúdo:
 
 openai
 
 
-Em seguida, instale as dependências:
+Em seguida, instale as dependências executando:
 
 pip install -r requirements.txt
 
-2. 🔐 Configurar chave da API da OpenAI
+4.2 🔐 Configurar a Chave da API da OpenAI
 
-Você precisa de uma chave de API válida para autenticação.
+Para autenticar sua aplicação, é necessário configurar sua chave de API.
+Você pode obtê-la em:
+🔑 https://platform.openai.com/api-keys
 
-🔑 Passo 1 — Obter a chave
-
-Acesse o painel da OpenAI e gere uma nova chave:
-👉 https://platform.openai.com/api-keys
-
-🧭 Passo 2 — Configurar variável de ambiente
-
-Windows (CMD ou PowerShell):
-
+💻 Windows (CMD ou PowerShell)
 setx OPENAI_API_KEY "sua-chave-secreta-aqui"
 
 
 Feche e reabra o terminal após definir a variável.
 
-macOS / Linux:
-
+🐧 macOS / Linux
 export OPENAI_API_KEY="sua-chave-secreta-aqui"
 
 
-Para tornar permanente, adicione essa linha ao arquivo ~/.bashrc ou ~/.zshrc.
+Para manter permanente, adicione esta linha ao arquivo ~/.bashrc ou ~/.zshrc.
 
-🚀 Executar o Projeto
+5. 🚀 Executando o Projeto
 
-Execute o script principal no terminal:
+Após configurar o ambiente e a chave da API, execute o script principal:
 
 python executar_prompt.py
 
 
-O script enviará um prompt de exemplo para a API e exibirá a resposta diretamente no console.
+O script enviará um prompt de exemplo para o modelo da OpenAI e exibirá a resposta no console.
 
-✨ Funcionalidades
+6. 🧠 Código Principal (executar_prompt.py)
+import os
+from openai import OpenAI
 
-✅ Conexão Segura: Usa variáveis de ambiente para gerenciar a chave da API.
-🧩 Função Modular: A lógica está encapsulada na função executar_prompt_openai().
-🛡️ Tratamento de Erros: Usa try...except para capturar erros de conexão ou autenticação.
-💬 Compatível com GPT-3.5 e GPT-4.
-📘 Exemplo pronto para uso.
+def executar_prompt_openai(prompt):
+    try:
+        client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        resposta = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[{"role": "user", "content": prompt}]
+        )
+        return resposta.choices[0].message.content.strip()
+    except Exception as e:
+        return f"Erro ao executar o prompt: {e}"
 
-📁 Estrutura do Projeto
-openai-prompt-executor/
-├── executar_prompt.py     # 🧠 Script principal de execução
-└── requirements.txt       # 📋 Dependências Python
+if __name__ == "__main__":
+    prompt = "Explique de forma simples o que é aprendizado de máquina."
+    print("Enviando prompt para a OpenAI...\n")
+    resposta = executar_prompt_openai(prompt)
+    print("--- Resposta da OpenAI ---")
+    print(resposta)
+    print("---------------------------")
 
-🧠 Exemplo de Saída
+7. 💬 Exemplo de Saída
 Enviando prompt para a OpenAI...
 
 --- Resposta da OpenAI ---
-A distância média da Terra até a Lua é de aproximadamente 384.400 km.
+Aprendizado de máquina é um ramo da inteligência artificial que permite que sistemas aprendam padrões a partir de dados, sem serem programados explicitamente.
 ---------------------------
 
-🧰 Solução de Problemas
+8. 🛠️ Solução de Problemas (Troubleshooting)
 ❌ Erro: invalid_api_key (401)
 
-🔍 Verifique:
+Esse erro ocorre quando a chave de API está incorreta ou ausente.
 
-Se a variável OPENAI_API_KEY está configurada corretamente
+✅ Soluções:
 
-Se a chave não expirou
+Gere uma nova chave no painel da OpenAI.
 
-Reinicie o terminal
+Verifique se a variável de ambiente foi configurada corretamente.
+
+Feche e reabra o terminal após definir a variável.
 
 ❌ Erro: insufficient_quota (429)
 
-💰 Motivo: Conta sem créditos disponíveis
-✅ Solução: Adicione um método de pagamento em
-👉 https://platform.openai.com/account/billing
+Esse erro indica falta de créditos na conta da OpenAI.
 
-🔗 Links Úteis
+✅ Soluções:
 
-📚 Documentação da API OpenAI
+Verifique sua conta em: OpenAI Billing
 
-🔑 Gerenciar Chaves de API
+Adicione um método de pagamento ativo.
 
-💵 Faturamento e Créditos
+Crie uma nova conta se seus créditos de teste expiraram.
 
-🐍 Biblioteca OpenAI Python (GitHub)
+9. 📚 Recursos e Links Úteis
+Recurso	Link
+📘 Documentação da API OpenAI	https://platform.openai.com/docs
 
-📜 Licença
+🔑 Página de Chaves de API	https://platform.openai.com/api-keys
 
-Este projeto foi desenvolvido para fins educacionais e demonstração.
-Sinta-se livre para adaptar e expandir conforme necessário.
+💳 Faturamento (Billing)	https://platform.openai.com/account/billing
 
-✨ OpenAI Prompt Executor — explorando o poder da IA com Python 🚀
+🐍 Biblioteca OpenAI para Python	https://github.com/openai/openai-python
+10. 👨‍💻 Autor
+
+OpenAI Prompt Executor foi desenvolvido com fins educacionais e demonstrativos, para auxiliar desenvolvedores a integrar IA em seus projetos Python.
+
+✨ Explorando o poder da IA com Python — de forma simples, modular e segura! 🚀
